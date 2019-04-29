@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Survay</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="border-bottom:solid">Survey Questions</h1>
+
+        <h2>About You</h2>
+        <br>
+        <br>
+
+        <label for="basic-url">Name</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <input id="name" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <br>
+
+        <label for="basic-url">Photo URL</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <input type="text" id="photo" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+
+            <div> </div>
+        </div>
+
+        <!--Questions-->
+        <h2 style="border-top:solid" style="border:grey">Question One:</h2>
+        <p>You like to take walks.</p>
+        <!--Dropdown Menu-->
+        <select id="dropdownOne">
+            <option value="1">Gastronomie</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">3</option>
+            <option value="5">Shopping</option>
+            <option value="bildung">Bildung</option>
+        </select>
+
+        <h2>Question Two:</h2>
+        <p>You like to take walks.</p>
+        <select id="dropdownTwo">
+            <option value="1">Gastronomie</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">3</option>
+            <option value="5">Shopping</option>
+            <option value="bildung">Bildung</option>
+        </select>
+
+        <h2>Question Three:</h2>
+        <p>You like dogs</p>
+        <select id="dropdownThree">
+            <option value="1">Gastronomie</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">3</option>
+            <option value="5">Shopping</option>
+            <option value="bildung">Bildung</option>
+        </select>
+
+        <h2 style="border:grey">Question Four:</h2>
+        <p>You like cats</p>
+        <select id="dropdownFour">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+
+        </select>
+
+
+        <h2 style="border:grey">Question Five:</h2>
+        <p>You would rather stay home versus go out and party</p>
+        <select id="dropdownFive">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+
+        <button type="button" id="submitBtn" class="btn btn-primary btn-lg btn-block">Submit</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+
+        $("#submitBtn").click(function () {
+
+            //All answers are saved and converted to an int
+            let answerOne = $("#dropdownOne").val().trim();
+            let answerTwo = $("#dropdownTwo").val().trim();
+            let answerThree = $("#dropdownThree").val().trim();
+            let answerFour = $("#dropdownFour").val().trim();
+            let answerFive = $("#dropdownFive").val().trim();
+            answerOne = parseInt(answerOne)
+            answerTwo = parseInt(answerTwo)
+            answerThree = parseInt(answerThree)
+            answerFour = parseInt(answerFour)
+            answerFive = parseInt(answerFive)
+
+            //answers are then pushed to an empty array
+            
+            var totalScore = [];
+            totalScore.push(answerOne);
+            totalScore.push(answerTwo);
+            totalScore.push(answerThree);
+            totalScore.push(answerFour);
+            totalScore.push(answerFive);
+
+            //New person object, which is pushed to the API
+            var newPerson =
+            {
+                name: $("#name").val(),
+                photoURL: $("#photo").val(),
+                scores: totalScore
+            }
+            $.post("/api/friends", newPerson,
+                function (data) {
+                    alert("Yay! You've been added :)")
+                });
+        });
+
+    </script>
+
+</body>
+
+</html>
